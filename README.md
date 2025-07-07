@@ -1,3 +1,119 @@
+# 🌳 Práctica: Estructuras No Lineales – Ejercicios con Árboles Binarios
+
+## 📌 Información General
+
+- **Título:** Implementación de Árboles Binarios – Insertar, Invertir, Listar Niveles y Calcular Profundidad
+- **Asignatura:** Estructura de Datos
+- **Carrera:** Computación
+- **Estudiante:** Mateo Josue Miller Mendez
+- **Correo:** mmillerm@est.ups.edu.ec
+- **Fecha:** 06 / 07 / 2025
+- **Profesor:** Ing. Pablo Torres
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+src/
+└── main/
+├── Ejercicio_01_insert/
+│ └── InsertBST.java
+├── Ejercicio_02_invert/
+│ └── InvertBinaryTree.java
+├── Ejercicio_03_listLeves/
+│ └── ListLevels.java
+├── Ejercicio_04_depth/
+  └── Depth.java
+```
+
+
+---
+
+## 🧠 Explicación de Ejercicios
+
+### Ejercicio 01: Insertar en un Arbol Binario de Búsqueda (BST)
+
+En este ejercicio, creo un meodo que sirve para insertar números en un arbol binario, llamado al arbol binario (BST). La idea es comparar el numero que quieres agregar con el valor del nodo donde esta parado. Si el numero es menor, vas para la izquierda, y si es mayor, va para la derecha. Si llegamos donde no hay nodo o esta vacio, ahi colocamos el nuvo numero. Asi el arbol esta ordenado y facil de buscar
+
+```java
+    public Node insert(Node root, int value) {
+        if (root == null) {
+            return new Node(value);
+        }
+        if (value < root.getValue()) {
+            root.setLeft(insert(root.getLeft(), value));
+        } else if (value > root.getValue()) {
+            root.setRight(insert(root.getRight(), value));
+        }
+        return root;
+    }
+```
+
+### Ejercicio 02: Invertir un Arbol Binario
+
+Este metodo sirve para darle la vuelta a un arbol binario, como si fuera relfejo en espejo. En cada vista cada nodo y se intercambian los hijos izquierdo y derecho. El metodo es recursivo entonces s e llama a si mismo: primero invierte los arboles hjos y luego cambia las ramas del nodo actual asi logrando que el arbol quede invertido
+
+```java
+public Node invertTree(Node root) {
+    if (root == null) {
+        return null;
+    }
+    Node left = invertTree(root.getLeft());
+    Node right = invertTree(root.getRight());
+    root.setLeft(right);
+    root.setRight(left);
+    return root;
+}
+```
+
+### Ejercicio 03: Listar Niveles en Listas Enlazadas
+
+En este metodo usamos una cola y hacemos un recorrido por nival siempre desde arriba hacia abajo, entonces en cada nivel vamos guardando los nodos que encontramos en una lsita y al final devolvemos esa lista que contiene todas las listas y como es una por cada nivel del arbol
+
+```java
+public List<List<Node>> listLevels(Node root) {
+    if (root == null) {
+        return new ArrayList<>();
+    }
+
+    List<List<Node>> result = new ArrayList<>();
+    Queue<Node> queue = new LinkedList<>();
+    queue.add(root);
+
+    while (!queue.isEmpty()) {
+        int levelSize = queue.size();
+        List<Node> currentLevel = new ArrayList<>();
+        for (int i = 0; i < levelSize; i++) {
+            Node current = queue.poll();
+            currentLevel.add(current);
+            if (current.getLeft() != null) {
+                queue.add(current.getLeft());
+            }
+            if (current.getRight() != null) {
+                queue.add(current.getRight());
+            }
+        }
+        result.add(currentLevel);
+    }
+
+    return result;
+}
+```
+
+### Calcular la Profundidad Máxima
+
+En este metodo hacemos con recursividad osea llamado a si mismo entonces si el nodo es null la profundidad es 0 y retornamos ese numero, si no, sumanos 1 y vemos cual es el de la profundidad mas grande entre el izquierdo y derecho y retorna la cantidad maxima del nivel que tiene el arbol 
+
+```java
+public int maxDepth(Node root) {
+    if (root == null) {
+        return 0;
+    }
+    return 1 + Math.max(maxDepth(root.getLeft()), maxDepth(root.getRight()));
+}
+```
+
 # Estructuras No Lineales – Ejercicios Árboles
 
 Este proyecto contiene la solución a cuatro ejercicios prácticos sobre estructuras de datos tipo árbol binario, como parte del aprendizaje de estructuras no lineales en Java. Cada ejercicio se encuentra organizado en su propia carpeta, siguiendo la convención de paquetes y buenas prácticas.
